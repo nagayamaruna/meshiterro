@@ -8,6 +8,15 @@ Rails.application.routes.draw do
   get 'homes', to: 'homes#top'
   end
   resources :users, only: [:show, :edit, :update]
+  
+  devise_for :admin, skip: [:registrations, :password], controllers: {
+    sessions: 'admin/sessions'
+  }
+ 
+  namespace :admin do
+    get 'dashboards', to: 'dashboards#index'
+    resources :users, only: [:destroy]
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
